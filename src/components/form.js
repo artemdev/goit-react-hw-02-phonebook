@@ -21,12 +21,17 @@ class Form extends Component {
 
     addContact = e => {
         e.preventDefault()
-        const { name } = e.target
+        const { name, number } = e.target
         const contact = {
             "name": name.value,
+            "number": number.value,
             "id": shortid.generate()
         }
-        this.setState({ contacts: [...this.state.contacts, contact] })
+        this.setState({
+            name: name.value,
+            number: number.value,
+            contacts: [...this.state.contacts, contact]
+        })
     }
 
     render() {
@@ -36,8 +41,13 @@ class Form extends Component {
                 <form action="" onSubmit={this.addContact}>
 
                     <label htmlFor="name">
-                        Name
-                    <input type="text" id="name" onChange={this.handleChange} />
+                        Name <br />
+                        <input type="text" id="name" />
+                    </label>
+                    <br />
+                    <label htmlFor="number">
+                        Number <br />
+                        <input type="text" id="number" />
                     </label>
                     <br />
 

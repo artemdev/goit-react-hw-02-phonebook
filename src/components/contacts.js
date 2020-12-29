@@ -1,12 +1,33 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import Section from './section'
-import shortid from 'shortid'
+
 class Contacts extends Component {
+
+    state = {
+        ...this.props.state
+    }
+
+    changeFilter = (e) => {
+        const { value } = e.target
+        this.setState({ filter: value })
+    }
+    filterResults = (contacts) => {
+        return contacts.filter(item => item.name.includes(this.state.filter)).map(item =>
+            <div>{item.name} {item.number}</div>)
+
+    }
 
     render() {
         return (
-            <Section title="Statistics">
-                {this.props.state.contacts.map(home => <div key={shortid.generate()}>{home.name}</div>)}
+            <Section title="Contacts">
+
+
+                <label htmlFor="name">
+                    <input type="text" id="name" onChange={this.changeFilter} />
+                </label>
+
+
+                {this.filterResults(this.state.contacts)}
             </Section>
         )
     }
