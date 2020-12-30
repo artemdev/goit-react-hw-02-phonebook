@@ -1,15 +1,17 @@
-// import { Component } from 'react'
+import { Component } from 'react'
 
-// class Filter extends Component {
-//     filterNames = () => {
-
-//     }
-//     render() {
-//         return (
+class Filter extends Component {
 
 
-//         )
-//     }
-// }
+    render() {
+        return (
 
-// export default Filter
+            <label htmlFor="filter">
+                <input type="text" id="filter" onChange={this.props.changeFilter} />
+            </label>
+
+        )
+    }
+}
+
+export default Filter
