@@ -43,14 +43,11 @@ class App extends Component {
 
     deleteContact = (id) => {
         const newArray = this.state.contacts.filter(contact => contact.id !== id)
-        this.setState({ ...this.state, contacts: [...newArray] })
+        this.setState(prevState => {
+            return { ...prevState, contacts: [...newArray] }
+        })
     }
 
-    showResults = (contacts = this.state.contacts) => {
-        return contacts.filter(item => item.name.toLowerCase().includes(this.state.filter)).map((item, index) =>
-            <div key={shortid.generate()}> {item.name} {item.number} <button onClick={() => this.deleteContact(item.id)}>delete</button></ div>)
-
-    }
     changeFilter = (e) => {
         const { value } = e.target
         this.setState({ ...this.state, filter: value.toLowerCase() })
@@ -66,12 +63,19 @@ class App extends Component {
     }
 
     render() {
+
+        const contactListProps = {
+            deleteContact: this.deleteContact,
+            contacts: this.state.contacts.filter(item => item.name.toLowerCase().includes(this.state.filter))
+        }
+
         return (
             <div>
                 <ContactForm addContact={this.addContact} />
                 <Filter changeFilter={this.changeFilter} />
-                <ContactList showResults={this.showResults} />
-            </div>
+
+                <ContactList {...contactListProps} />
+            </div >
         )
     }
 }
